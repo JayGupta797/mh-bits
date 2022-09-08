@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Load external css sheet !-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+
+</head>
+<body>
+
+<div class="topnav">
+  <div class="left-links">
+    <a class="links selected" href="./index.html">About</a>
+  </div>
+  <div class="right-links">
+    <a class="links" href="./methods.html"> Methods</a>
+    <a class="links" href="./sources.html">Data Sources</a>
+    <a class="links" target=”_blank” href="https://docs.google.com/forms/d/e/1FAIpQLSdnGkcEHN9Wh6PGfD7H6K91OIbj4FrsaiDHot1x5TyF10ZzVg/viewform?usp=sf_link">Feedback Form</a>
+  </div>
+  <!-- <div class="last-link">
+    <a class="links" href="#">Feedback Form</a>
+  </div> -->
+</div>
+
+
+<div class="text-container">
+  <div class="space"></div>
+  <div class="outline">
+    <h1>Outline</h1>
+      <ul>
+        <li><a class="text-link" href="#consolidating">Consolidating Data</a></li>
+        <li><a class="text-link" href="#extracting">Extracting Bill Text</a></li>
+        <li><a class="text-link" href="#defining">Defining Mental Health</a></li>
+        <li><a class="text-link" href="#text-process">Text Processing</a></li>
+        <li><a class="text-link" href="#aggregating">Aggregating by Topic</a></li>
+      </ul>
+  </div>
+  <div class="text">
+    <h1>Methods</h1>
+    <p>
+      This page overviews the cleaning and preparation portion of our project. If you are interested in learning how to interpret MH-BiTs or 
+    related definitions, please visit the Data Sources page instead.
+    </p>
+    <img src="./images/bit-1.png" alt="text" class="image" id="consolidating">
+    <p>
+      Data was bulk-downloaded from <a class="text-link" target=”_blank” href="https://legiscan.com/datasets">LegiScan</a>. As shown in the graphic above, the data was split into 6 folders labeled by the congressional session. For example, folder '111' denotes the 111th congress which spanned from 2009-2010. Inside each congress, there are three folders. Of importance to us is the 'Bills' folder which features several <a class="text-link" target=”_blank” href="https://en.wikipedia.org/wiki/JSON">json-formatted</a> files containing a variety of useful information (ex. bill number, chamber of origin, sponsors, etc.) on all bills introduced in that session. After renaming the files using their internal legiscan bill id, we merged all 76K bills into a single folder. However, upon closer inspection, we noticed the files were missing the bill text! Luckily, the LegiScan API provides a get_text() function which returns a base64 encoded pdf.
+    </p>
+    <img src="./images/bit-2.png" alt="text" class="image" id="extracting">
+    <p>
+      At this point, we needed to extract actual text from the pdf documents. To do this, we leveraged an open-source python project called <a class="text-link" target=”_blank” href="https://github.com/jsvine/pdfplumber">pdfplumber</a>. Upon inspection, we noticed that the pdf documents contained meta-data (highlighted in white) that interfered with the text extraction process. To get rid of it, we found a suitable bounding box (shown in gray) that removed unwanted elements. We also needed to restore hyphenated words among other text repair processes. While we couldn't ensure that all of the text was extracted correctly (several edge-cases popped up), we are confident that the somewhat lossy conversion didn't susbtantially impact subsequent analysis.
+    </p>
+    <img src="./images/bit-3.png" alt="text" class="image" id="defining">
+    <p>
+      With the bill text on hand, we needed to better define what constitues a mental health bill. As it so happens, the <a class="text-link" target=”_blank” href="https://en.wikipedia.org/wiki/Congressional_Research_Service">Congressional Research Service</a>, assigns each bill a certain set of <a class="text-link" target=”_blank” href="https://www.congress.gov/help/field-values/legislative-subject-terms">subject terms</a> to describe it's contents. Unfortunately, we found that topic models produced using the roughly 2K bills containing 'mental health' in their subject-terms produced poor results. Upon inspecting the actual bill text, we found that the majority of these bills didn't mention the term 'mental health' in their bill text! We decided to (somewhat arbitrarily) filter for bills containing 5 or more occurences of mental health in their bill text. After dropping duplicate bills (some passed the house and moved onto the senate) we were left with a grand total of 632 bills. 
+    </p>
+    <img src="./images/bit-4.png" alt="text" class="image" id="text-process">
+    <p>
+      With a working definition of mental health bills, we processed the bill text further. The first step gets rid of any non-alphabetical characters present in the text. These may arise when a bill cites a figure, names a section, etc. Afterwards, we tokenized the text (split it by whitespace) and removed non-words that may have emerged from text irregularities. Using nltk's lemmatization tools helped prevent number or tense based differences. We also removed domain specific jargon and words common in the english language (collectively called stop-words) to prevent over-sacturation of irrelevant vocabulary. Stop Words included "section" or "is" to name a couple. Finally, we filtered for nouns and adjectives using nltk's pos-tagging tools. The rationale is that topics are primarily communicated through those parts-of-speech. Once the bill text was sufficiently prepared, we passed the corpus into LDA and reviewed the resulting terms and weights with a subject matter expert who provided reasonable topic labels.
+    </p>
+    <img src="./images/bit-5.png" alt="text" class="image" id="aggregating">
+    <p>
+      Once assignments were made, we began aggregating the data by topic. To estimate the urbanization variable, we linked census data from the <a class="text-link" target=”_blank” href="https://www.census.gov/programs-surveys/acs">American Community Survey</a> using the bill's introduced date along with the congressional district(s) the author(s) represented. As indicated above, we found evidence that democrats tend to author mental health bills more than their republican counterparts. 
+    </p>
+    <br>
+  </div>
+  <div class="space"></div>
+</div>
+
+
+</body>
+</html>

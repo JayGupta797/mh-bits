@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Load external css sheet !-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="topnav">
+  <div class="left-links">
+    <a class="links selected" href="./index.html">About</a>
+  </div>
+  <div class="right-links">
+    <a class="links" href="./methods.html"> Methods</a>
+    <a class="links" href="./sources.html">Data Sources</a>
+    <a class="links" target=”_blank” href="https://docs.google.com/forms/d/e/1FAIpQLSdnGkcEHN9Wh6PGfD7H6K91OIbj4FrsaiDHot1x5TyF10ZzVg/viewform?usp=sf_link">Feedback Form</a>
+  </div>
+  <!-- <div class="last-link">
+    <a class="links" href="#">Feedback Form</a>
+  </div> -->
+</div>
+
+
+<div class="text-container">
+  <div class="space"></div>
+  <div class="outline">
+    <h1>Outline</h1>
+      <ul>
+        <li><a class="text-link" href="#sources">Data Sources</a></li>
+        <li><a class="text-link" href="#definitions">Key Definitions</a></li>
+        <li><a class="text-link" href="#interpreting">Interpreting MAP-BiTS</a></li>
+      </ul>
+  </div>
+  <div class="text">
+    <h1 id="sources">Data Sources</h1>
+    <p>
+      We used 3 external datasets for this project:
+      <ul>
+        <li><a class="text-link" target=”_blank” href="https://legiscan.com/datasets">LegiScan Datasets</a></li>
+        <li><a class="text-link" target=”_blank” href="https://www.census.gov/programs-surveys/acs">American Community Survey</a> (see <a class="text-link" target=”_blank” href="https://api.census.gov/data.html">datasets</a> and <a class="text-link" target=”_blank” href="https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-guide.pdf">pull template</a>)</li>
+        <li><a class="text-link" target=”_blank” href="https://www2.census.gov/geo/tiger/TIGER2012/CD/">Congressional District Shapefile</a></li>
+      </ul>
+    </p>
+
+    <h1 id="definitions">Key Definitions</h1>
+    <p>
+      The <a class="text-link" target=”_blank” href="https://legiscan.com/misc/LegiScan_API_User_Manual.pdf">LegiScan Manual</a> offers comprehensive documentation. However, the raw data we provide includes many derived and re-named variables. For convenience, we'll include notable definitions here.
+    </p>
+    <br>
+    <table>
+      <tr>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>bill_id</td>
+        <td>integer</td>
+        <td>Internal bill id</td>
+      </tr>
+      <tr>
+        <td>sponsors[][]</td>
+        <td>array</td>
+        <td>Array of sponsors</td>
+      </tr>
+      <tr>
+        <td>title</td>
+        <td>string</td>
+        <td>Amendment Title</td>
+      </tr>
+      <tr>
+        <td>url</td>
+        <td>string</td>
+        <td>LegiScan URL</td>
+      </tr>
+      <tr>
+        <td>Congress</td>
+        <td>integer</td>
+        <td>Congressional Session</td>
+      </tr>
+      <tr>
+        <td>D/R</td>
+        <td>integer</td>
+        <td>Number of Democrat/Republican Sponsors</td>
+      </tr>
+      <tr>
+        <td>Date</td>
+        <td>date</td>
+        <td>Introduced Date (Year-Month-Day)</td>
+      </tr>
+    </table>
+    <br>
+    <p> For linking purposes, we needed to convert districts provided by LegiScan into a Census accepted format. The code snippet below will do this task.</p>
+    <pre><code>state = {'AL': '01', 'AK': '02', ...} # FIPS codes
+
+def getGeoId(district):
+    if district[0:2] == 'HD' and (district[3:5] != 'DC'):
+        a =  state.get(district[3:5])
+        b = district[6:]
+        if len(b) == 1: b = "0" + b
+        if len(b) == 0: b = "00"
+        geoid = a + b
+        return geoid
+    else: return np.nan }</code></pre>
+    <p>Please note that we omit Senate Bills. Congressional Districts offer a much finer grain.</p>
+    <br>
+    <h1 id="interpreting">Interpreting MAP-BiTS</h1>
+    <p>
+      This interactive visualization allows users to select 1 of 8 sub-categories we identified within mental health bills over the past decade. Upon doing so, all assets are updated accordingly. The table shows every bill that falls under the selected category. Since bills can fall into multiple categories simultaneously, the total across all topics does not add up to 632. The histogram displays the number of bill introduced binned by month. It is directly connected to the choropleth above. This map shows the sponsorship (more general than authorship) of mental health bills belonging the selected sub-topic. By dragging the gray brush tool, users can sub-set the data into a specific time frame. Since each bill can receive any number of sponsors, the cumlative number of bills selected doesn't restrict the map's color-domain.
+    </p>
+    <br>
+  </div>
+  <div class="space"></div>
+</div>
+
+  <!-- <h1>On Legislation</h1>
+    <p>
+      This section seeks to overview the legislative process. In doing so, we hope to provide some much-needed context for the items described below.
+      If you feel well equipped to press onward, go ahead and skip this introduction.
+    </p>
+    <br>
+    <p>
+      The United States constitution outlines the three branches of government: legislative, executive, and judicial. For our analyses, we are primarily concerned with the legislative branch. At a congressional scope, the legislature is bicameral, meaning it has an upper (Senate) and lower (House) chamber. 
+    </p>
+    <img src="./images/gov.png" alt="text" class="image" id="gov">
+    <p>
+      Since 1789, there have been 117 distinct congresses each lasting 2 years. For example, the 111th congress spanned from 1789 + 2⋅110 = 2009-2011. The Senate takes in two members per state. With 50 states, that makes a grand total of 100 senators. The House of Representatives splits each state into congressional districts based on population statistics provided by the census. As the census is conducted every decade, redistricting follows a similar timeline. While there are currently 435 seats, it is worth noting that this includes 6 non-voting members from the District of Columbia, Puerto Rico, American Samoa, Guam, Northern Mariana Islands, and Virgin Islands.
+    </p>
+    <br>
+    <img src="./images/district-19.png" alt="text" class="image" id="district-19">
+    <br>
+    <p>
+      Each legislator has certain information associated with them. Namely, they belong to a party and represent certain populations. They also receive campaign funds, have nicknames, and much more.
+    </p>
+    <br>
+    <p>
+      Now these legislators are supposed to make laws, but how exactly does that work out? Well, it all starts off with a bill. You can think of this as a rough-draft that is submitted to congress for further review. Bills may be introduced in both the House and Senate. The legislators introducing a bill are called primary sponsors. Optionally, a member of congress may demonstrate their support for a bill by co-sponsoring it. There is no limit to the number of cosponsors.
+    </p>
+    <br>
+    <img src="./images/bill.png" alt="text" id="bill">
+    <br>
+    <p>
+      While the content of bills vary, they do share a similar structure. In general, bills open with a brief description (something like to amend...) followed by background information and proposal details. All of the lines are numbered with a maximum of 22 in a given page. Admittingly, this is all probably difficult to conceptualize, so we included an accompanying diagram on the right. If you want a more detailed review of bill structure, we recommend checking out this <a class="text-link" target=”_blank” href="https://courses.lumenlearning.com/masterybusinesslaw/chapter/how-to-read-a-bill/">article</a> on how to read a bill.
+    </p>
+    <br>
+    <p>
+      Bills also contain document-level information. Namely, they have numbers, types, descriptions, and subject terms. Numbers (ex HR-123) are assigned based on the order bills are proposed in a given congress. The description and subject terms are assigned by the Congressional Research Service. Officially, there are 565 subjects (ex. mental health), 299 geographic entities (ex. ASEAN), and 180 organizations (ex. Peace Corps).
+    </p>
+    <br> -->
+
+
+</body>
+</html>

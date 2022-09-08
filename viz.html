@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<!-- Load external css sheet !-->
+<link rel="stylesheet" href="viz_style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+
+<!-- Load font !-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&display=swap" rel="stylesheet">
+
+<!-- Basic Layout !-->
+<body>
+	
+	<div class="topnav">
+  		<div class="left-links">
+    		<a class="links selected" href="./index.html">About</a>
+  		</div>
+  		<div class="right-links">
+		    <a class="links" href="./methods.html"> Methods</a>
+		    <a class="links" href="./sources.html">Data Sources</a>
+		    <a class="links" target=”_blank” href="https://docs.google.com/forms/d/e/1FAIpQLSdnGkcEHN9Wh6PGfD7H6K91OIbj4FrsaiDHot1x5TyF10ZzVg/viewform?usp=sf_link">Feedback Form</a>
+  		</div>
+	</div>
+
+	<div class="top-container">
+	  <div class="map-box"></div>
+	  <div class="topics">
+	  	<div class="selector-box"></div>
+	  	<div class="weights">
+	  		<p>Sexual Violence: 0.047*violence</p>
+	  		<p>Federal Funding: 0.051*funds</p>
+	  		<p>DOD: 0.027*dod</p>
+	  		<p>Public Insurance: 0.021*medicare</p>
+	  		<p>Children: 0.048*grant</p>
+	  		<p>Veterans Affairs: 0.079*veteran</p>
+	  		<p>Juvenile Justice: 0.045*juvenile</p>
+	  		<p>School: 0.097*school</p>
+	  	</div>
+	  </div>
+	  <div class="blank-space"></div>
+	  <div style="overflow-x:auto;" class="table-box"></div>
+	</div>
+
+	<div class="bottom-container">
+		<div class="bar-box" id="bar"></div>
+	</div>
+
+</body>
+
+<!-- Load map js  !-->
+<script src="map.js"></script>
+
+<!-- Load table js  !-->
+<script src="table.js"></script>
+
+<!-- Load bar js  !-->
+<script src="bar.js"></script>
+
+</html>
