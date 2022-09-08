@@ -1,0 +1,154 @@
+:root {
+  --space-between: 20px;
+  --nav-color: #333;
+  --nav-hover-color: #272727;
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  color: #444341;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: var(--nav-color);
+  margin-bottom: var(--space-between);
+}
+
+.topnav a {
+  color: #f2f2f2;
+  padding: 14px;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.topnav .left-links {
+  float: left;
+  padding-left: 10vw;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.topnav .right-links {
+  float: right;
+  padding-right: 10vw;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.topnav a:hover {
+  background-color: var(--nav-hover-color);
+}
+
+.top-container {
+  font-family: 'Noto Sans'; font-size: 10px;
+  display: flex;
+}
+
+.bottom-container {
+  display: flex;
+  min-width: 0;
+}
+
+.map-box {
+  flex: 45;
+  text-align:center;
+  /*border: 1px solid black;*/
+}
+
+.topics {
+  font-family: 'Open Sans'; 
+  font-size: 10px;
+  flex: 13;
+  /*border: 1px solid black;*/
+}
+
+.blank-space {
+  flex: 2;
+  /*border: 1px solid black;*/
+}
+
+.table-box {
+  flex: 40;
+  height: 300px;
+  /*border: 1px solid black;*/
+}
+
+.bar-box {
+  flex: 100;
+  text-align:center;
+  /*border: 1px solid black;*/
+}
+
+#bills {
+  font-family: 'Noto Sans', sans-serif;
+  border-collapse: collapse;
+  width: 96%;
+}
+
+#bills td, #bills th {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+#bills tr:nth-child(even){background-color: #f2f2f2;}
+
+#bills tr:hover {background-color: #ddd;}
+
+#bills th {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: left;
+  background-color: #333;
+  color: white;
+}
+
+.selector-box {
+  text-align: left;
+  position: absolute;
+  /*border: 1px solid black;*/
+}
+
+select {
+   border: 1px solid black;
+   background: #333;
+   flex: 1;
+   padding: 0 .5em;
+   color: #fff;
+   cursor: pointer;
+   font-size: 15px;
+   font-family: 'Noto Sans', sans-serif;
+}
+
+.selector-box {
+   position: relative;
+   display: flex;
+   height: 3em;
+   line-height: 3;
+   overflow: hidden;
+   border-radius: .25em;
+   color: #fff;
+}
+
+.selector-box::after {
+   content: '\25BC';
+   position: absolute;
+   top: 0;
+   right: 0;
+   padding: 0 1em;
+   background: black;
+   cursor:pointer;
+   pointer-events:none;
+   transition:.25s all ease;
+}
+
+.selector-box:hover::after {
+   color: #23b499;
+}
+
+.weights {
+  position: absolute;
+  /*border: 1px solid black;*/
+}
+

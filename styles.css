@@ -1,0 +1,199 @@
+:root {
+  --space-between: 20px;
+  --nav-color: #333;
+  --nav-hover-color: #272727;
+  --text-link-color: #0D8CBA;
+  --text-link-hover-color: #0036B1;
+}
+
+.text-link { color: var(--text-link-color); }
+.text-link:hover { color: var(--text-link-hover-color); }
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  color: #444341;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: var(--nav-color);
+  margin-bottom: var(--space-between);
+}
+
+.topnav a {
+  color: #f2f2f2;
+  padding: 14px;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.topnav .left-links {
+  float: left;
+  padding-left: 10vw;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.topnav .right-links {
+  float: right;
+  padding-right: 10vw;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.topnav a:hover {
+  background-color: var(--nav-hover-color);
+}
+
+.info-container {
+    width: 80vw;
+    background-image: url('./confectionary.png');
+    background-origin: content-box;
+    margin: auto;
+    margin-bottom: var(--space-between);
+}
+
+.info-text {
+    padding:  50px;
+}
+
+.info-text h1 {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 75px;
+    color: black;
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+
+.info-text p {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 20px;
+    color: black;
+    margin-bottom: 0px;
+}
+
+.clicky-stuff {
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 2rem;
+}
+
+.grid-title {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 30px;
+}
+
+.button {
+  border: 1px solid black;
+  background-color: #0C8CBA; 
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #066687;
+}
+
+.text-container {
+  display: flex;
+  /*border: 1px solid black;*/
+}
+
+.text-container h1 {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 40px;
+  color: black;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.outline {
+  flex: 20;
+  align-self: flex-start;
+  position: sticky;
+  top: 0;
+  /*border: 1px solid black;*/
+}
+
+.outline ul {
+  list-style-position: inside;
+  padding-left: 0px;
+}
+
+.text {
+  flex: 60;
+  /*border: 1px solid black;*/
+}
+
+.text p {
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  color: #444341;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.text ul {
+  list-style-position: inside;
+  padding-left: 0px;
+  font-size: 20px;
+}
+
+.text .image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60vw;
+}
+
+#bill  {
+  width:  30vw;
+  float: right;
+}
+
+.space {
+  flex: 10;
+  /*border: 1px solid black;*/
+}
+
+pre code {
+  background-color: #eee;
+  border: 1px solid #000;
+  display: block;
+  padding: 20px;
+  font-size: 15px;
+}
+
+table {
+  font-family: "Open Sans", sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid black;
+  text-align: left;
+  padding: 7px;
+}
+
+th {
+  background-color: #2b2e2e;
+  color: white;
+}
+
+/*tr:nth-child(even) {
+  background-color: #dddddd;
+}*/
+
