@@ -7,7 +7,7 @@ const width = document.getElementById("bar").offsetWidth;
 // The top container takes up 100vw broken into 45 + 13 + 2 + 40. That last one is the table-container.
 // Since the table only uses 96% of space available, we have 100 - 60 + 40(0.96) = 1.6vw of space as buffer
 const height = 200;
-const margin = { top: 20, right: 0.016*width, bottom: 20, left: 80 };
+const margin = { top: 0, right: 0.016*width, bottom: 20, left: 80 };
 const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 45;
 
