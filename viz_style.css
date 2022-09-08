@@ -79,6 +79,12 @@ body {
   /*border: 1px solid black;*/
 }
 
+.bar-text {
+  text-align:left;
+  padding-left: 80px;
+  /*border: 1px solid black;*/
+}
+
 #bills {
   font-family: 'Open Sans', sans-serif;
   border-collapse: collapse;
